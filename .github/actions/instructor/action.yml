@@ -1,0 +1,31 @@
+name: Instructor grading
+description: Build MatrixClass and run every serial and parallel test
+outputs:
+  score:
+    description: Points earned by this submission
+    value: ${{ steps.final-score.outputs.score }}
+runs:
+  using: composite
+  steps:
+    - name: Initialize score
+      shell: bash
+      run: printf 'score=0\n' >> "$GITHUB_ENV"
+    - name: Build and test for 10 or 100 points
+      shell: bash
+      env:
+        CXX: g++
+      run: |
+        score=10
+        if cmake --fresh -S . -B build-grading -DCMAKE_BUILD_TYPE=Release \
+            -DMATRIXCLASS_BUILD_TESTS=ON -DMATRIXCLASS_BUILD_EXAMPLES=ON \
+            -DMATRIXCLASS_BUILD_NUMBER_EXTRAS=ON &&
+            cmake --build build-grading --config Release --parallel 2 &&
+            ctest --test-dir build-grading -C Release --output-on-failure --no-tests=error; then
+          score=100
+        fi
+        printf 'score=%s\n' "$score" >> "$GITHUB_ENV"
+        printf 'Assignment score: %s/100\n' "$score"
+    - name: Save final score
+      id: final-score
+      shell: bash
+      run: printf 'score=%s\n' "$score" >> "$GITHUB_OUTPUT"

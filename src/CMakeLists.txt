@@ -1,0 +1,6 @@
+add_library(matrixclass STATIC Matrix.cpp)
+add_library(MatrixClass::MatrixClass ALIAS matrixclass)
+target_compile_features(matrixclass PUBLIC cxx_std_17)
+set_target_properties(matrixclass PROPERTIES CXX_EXTENSIONS OFF POSITION_INDEPENDENT_CODE ON)
+target_include_directories(matrixclass PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include")
+target_link_libraries(matrixclass PUBLIC OpenMP::OpenMP_CXX)

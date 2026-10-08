@@ -1,0 +1,14 @@
+{
+  "assignmentId": "aca_Y609c14iDTttv8opCGTW7ZwqiRwem4uK",
+  "protected_files": [
+    "include/Matrix.hpp",
+    "include/MatrixStrings.hpp",
+    "test/instructor",
+    "CMakeLists.txt",
+    "src/CMakeLists.txt",
+    "test/CMakeLists.txt",
+    "cmake",
+    "example"
+  ],
+  "sourceVersion": "main"
+}
